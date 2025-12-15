@@ -10,11 +10,49 @@ import {
   Linkedin,
   Facebook,
   Mail,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
 const LbcWebsite = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [heroLoaded, setHeroLoaded] = useState(false);
+  const [currentStoryIndex, setCurrentStoryIndex] = useState(0);
+
+  const stories = [
+    {
+      image: "https://images.unsplash.com/photo-1556740758-90de374c12ad?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+      quotes: [
+        "Entering a new community as a small business leader with a new concept can be a challenge! You look at all the 'what if's' and 'who's who' in the demographic... and that weight alone can be crippling to any entrepreneur.",
+        "Before entering our new business endeavor in Frederick, CO, we were welcomed and greeted at the local farmers market by some of the kindest and already established small town business owners... overnight became a family of force.",
+        "Opening a business is never as easy as one would think and through the connection, inclusion and transparency of those new friendships... we were able to build a network of trust. Never doubt the strength of the community around you."
+      ],
+      author: "Isaac Olson & Shane Stinn",
+      role: "Owners of 2025 Frederick Small Business of the Year, MECO Coffee Collective"
+    },
+    {
+      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+      quotes: [
+        "The LBC gave me the confidence to scale my operations. I was hesitant to hire my first employee, but the mentorship I received here changed everything.",
+        "Having a network of peers who understand the specific challenges of our local market is invaluable. It's not just about business; it's about belonging."
+      ],
+      author: "Sarah Jenkins",
+      role: "Founder, Jenkins Design Studio"
+    }
+  ];
+
+  const nextStory = () => {
+    setCurrentStoryIndex((prev) => (prev + 1) % stories.length);
+  };
+
+  const prevStory = () => {
+    setCurrentStoryIndex((prev) => (prev - 1 + stories.length) % stories.length);
+  };
+
+  useEffect(() => {
+    setHeroLoaded(true);
+  }, []);
 
   // Handle scroll for navbar styling
   useEffect(() => {
@@ -120,14 +158,37 @@ const LbcWebsite = () => {
         )}
       </nav>
 
+      {/* New Top Hero Section */}
+      <div className="relative w-full h-screen overflow-hidden flex items-center justify-center bg-black">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute top-0 left-0 w-full h-full object-cover z-0"
+        >
+          <source src="/Assets/7660008-uhd_3840_2160_25fps.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <img
+          src="/Assets/threadswithlogo.png"
+          alt="LBC Threads with Logo"
+          className={`relative z-10 max-w-full max-h-full object-contain transition-all duration-[2000ms] ease-out ${
+            heroLoaded
+              ? "opacity-90 scale-100 blur-0"
+              : "opacity-0 scale-110 blur-sm"
+          }`}
+        />
+      </div>
+
       {/* Hero Section (Image 2) */}
       <header
         id="about"
-        className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden"
+        className="relative min-h-[600px] flex items-center overflow-hidden py-16 md:py-0"
       >
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-6 relative z-10">
           <div className="flex flex-col lg:flex-row items-center gap-12">
-            <div className="lg:w-1/2 z-10">
+            <div className="lg:w-2/3">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
                 <span style={{ color: colors.orange }}>
                   Entrepreneurs are the{" "}
@@ -146,25 +207,24 @@ const LbcWebsite = () => {
                 JOIN THE COLLABORATIVE
               </button>
             </div>
-            <div className="lg:w-1/2 relative">
-              <div className="aspect-[4/3] bg-gray-200 overflow-hidden relative shadow-xl">
-                {/* Placeholder for Man in Workshop Image */}
-                <img
-                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                  alt="Man working in industrial workshop"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
           </div>
+        </div>
+        
+        {/* Full height image on the right (1/3 width on desktop) */}
+        <div className="hidden lg:block absolute top-0 right-0 w-1/3 h-full">
+          <img
+            src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+            alt="Man working in industrial workshop"
+            className="w-full h-full object-cover"
+          />
         </div>
       </header>
       <ThreadStrip />
 
       {/* The Problem (Images 3 & 4) - Dark Mode */}
-      <Section id="the-problem" className="bg-[#121212] text-white">
+      <Section id="the-problem" className="bg-[#121212] text-white pb-12">
         <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-16 items-center mb-24">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
               <h2 className="text-5xl font-bold mb-6">
                 Leadership Can
@@ -194,7 +254,11 @@ const LbcWebsite = () => {
               </div>
             </div>
           </div>
-
+        </div>
+      </Section>
+      <ThreadStrip />
+      <Section className="bg-[#121212] text-white pt-12">
+        <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-16 items-start">
             <div>
               <h2 className="text-5xl font-bold mb-8 text-[#F4F1EA]">
@@ -251,10 +315,10 @@ const LbcWebsite = () => {
       <ThreadStrip />
 
       {/* Intro & Quote (Images 5 & 6) */}
-      <Section id="mission" className="bg-[#F4F1EA]">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col lg:flex-row gap-12 items-center mb-24">
-            <div className="lg:w-1/2">
+      <section id="mission" className="relative bg-[#F4F1EA] min-h-[500px] flex items-center overflow-hidden">
+        <div className="container mx-auto px-6 relative z-10 py-16 md:py-24">
+          <div className="flex flex-col lg:flex-row items-center gap-12">
+            <div className="lg:w-2/3">
               <h2
                 className="text-5xl md:text-6xl font-bold leading-tight mb-4"
                 style={{ color: colors.red }}
@@ -276,18 +340,21 @@ const LbcWebsite = () => {
                 </span>
               </p>
             </div>
-            <div className="lg:w-1/2">
-              {/* Abstract Fabric Image */}
-              <div className="aspect-square relative overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1620625515032-6ed0c1790c75?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
-                  alt="Abstract woven texture"
-                  className="w-full h-full object-cover rounded-tr-[4rem] rounded-bl-[4rem]"
-                />
-              </div>
-            </div>
           </div>
+        </div>
 
+        {/* Full height image on the right (1/3 width on desktop) */}
+        <div className="hidden lg:block absolute top-0 right-0 w-1/3 h-full">
+          <img
+            src="/Assets/lbcquilt.png"
+            alt="LBC Quilt"
+            className="w-full h-full object-cover"
+          />
+        </div>
+      </section>
+      <ThreadStrip />
+      <Section className="bg-[#F4F1EA] pt-12">
+        <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center py-12 border-t-2 border-gray-200">
             <p
               className="text-3xl md:text-4xl font-bold leading-tight"
@@ -298,24 +365,28 @@ const LbcWebsite = () => {
               forward.”
             </p>
             <div className="mt-8 flex justify-center">
-              <div className="w-12 h-12 border-2 border-gray-400 p-1 opacity-50">
-                <div className="w-full h-full bg-gray-400"></div>
-              </div>
+              <img
+                src="/Assets/LBC Submark Only.svg"
+                alt="LBC Submark"
+                className="w-20 h-20 object-contain"
+              />
             </div>
           </div>
         </div>
       </Section>
+      <ThreadStrip />
 
       {/* Methodology (Image 7) */}
-      <div
-        className="relative py-20"
-        style={{
-          backgroundImage:
-            'url("https://www.transparenttextures.com/patterns/cream-paper.png")',
-          backgroundColor: "#f0ede6",
-        }}
-      >
-        <div className="container mx-auto px-6">
+      <div className="relative py-20">
+        {/* Background Image */}
+        <img
+          src="/Assets/Background_1.png?v=3"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+
+        <div className="relative container mx-auto px-6">
           <h2
             className="text-5xl font-bold mb-16 text-center md:text-left"
             style={{ color: colors.red }}
@@ -361,6 +432,116 @@ const LbcWebsite = () => {
           </div>
         </div>
       </div>
+      <ThreadStrip />
+
+      {/* Transformation (Image 8) */}
+      <div className="bg-[#F4F1EA] py-16">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col-reverse lg:flex-row gap-12 items-center">
+            <div className="lg:w-1/2">
+              <h2 className="text-5xl font-bold mb-12">
+                <span style={{ color: colors.orange }}>
+                  Who You
+                  <br />
+                  Become
+                </span>
+              </h2>
+
+              <div className="space-y-8">
+                <div className="flex gap-4">
+                  <div className="w-4 h-4 mt-2 bg-orange-400 shrink-0"></div>
+                  <div>
+                    <h4 className="font-bold uppercase mb-2">Connected</h4>
+                    <p className="text-gray-700">
+                      Inside the LBC, you'll transition from feeling isolated to
+                      becoming part of a supportive network, where collaboration
+                      and community drive your growth and success.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <div className="w-4 h-4 mt-2 bg-orange-400 shrink-0"></div>
+                  <div>
+                    <h4 className="font-bold uppercase mb-2">Empowered</h4>
+                    <p className="text-gray-700">
+                      Experience a shift from overwhelmed to empowered, as the
+                      LBC provides the tools and resources needed to navigate
+                      challenges and move forward with confidence.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="lg:w-1/2">
+              <div className="aspect-[4/5]">
+                <img
+                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                  alt="Happy diverse group working"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ThreadStrip />
+
+      {/* Stories / Testimonial (Image 9) */}
+      <section id="stories" className="flex flex-col lg:flex-row bg-[#F4F1EA] min-h-[600px]">
+        {/* Image Section - 1/3 width on desktop, full on mobile */}
+        <div className="lg:w-1/3 w-full relative min-h-[400px] lg:min-h-auto group">
+          <img
+            key={currentStoryIndex}
+            src={stories[currentStoryIndex].image}
+            alt={stories[currentStoryIndex].author}
+            className="absolute inset-0 w-full h-full object-cover animate-fade-in"
+          />
+          {/* Navigation Buttons */}
+          <div className="absolute bottom-0 right-0 flex z-10">
+            <button
+              onClick={prevStory}
+              className="bg-black text-white p-4 hover:bg-[#D86B60] transition-colors"
+              aria-label="Previous story"
+            >
+              <ChevronLeft size={24} />
+            </button>
+            <button
+              onClick={nextStory}
+              className="bg-black text-white p-4 hover:bg-[#D86B60] transition-colors border-l border-gray-800"
+              aria-label="Next story"
+            >
+              <ChevronRight size={24} />
+            </button>
+          </div>
+        </div>
+
+        {/* Content Section - 2/3 width on desktop */}
+        <div className="lg:w-2/3 w-full py-16 px-6 md:px-16 flex flex-col justify-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
+            <span style={{ color: colors.orange }}>
+              Inspiring Stories from
+              <br />
+              Our Local Leaders
+            </span>
+          </h2>
+
+          <div className="space-y-6 text-gray-800 text-lg leading-relaxed min-h-[200px]">
+            {stories[currentStoryIndex].quotes.map((quote, idx) => (
+              <p key={idx} className="animate-fade-in">
+                "{quote}"
+              </p>
+            ))}
+          </div>
+
+          <div className="mt-8 font-bold text-sm uppercase tracking-wide animate-fade-in">
+            - {stories[currentStoryIndex].author}
+            <br />
+            <span className="text-gray-600 font-normal normal-case">
+              {stories[currentStoryIndex].role}
+            </span>
+          </div>
+        </div>
+      </section>
       <ThreadStrip />
 
       {/* Community Grid (Image 10) */}
@@ -420,132 +601,18 @@ const LbcWebsite = () => {
           </div>
         </div>
       </Section>
-
-      {/* Transformation (Image 8) */}
-      <div className="bg-[#F4F1EA] py-16">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col-reverse lg:flex-row gap-12 items-center">
-            <div className="lg:w-1/2">
-              <h2 className="text-5xl font-bold mb-12">
-                <span style={{ color: colors.orange }}>
-                  Who You
-                  <br />
-                  Become
-                </span>
-              </h2>
-
-              <div className="space-y-8">
-                <div className="flex gap-4">
-                  <div className="w-4 h-4 mt-2 bg-orange-400 shrink-0"></div>
-                  <div>
-                    <h4 className="font-bold uppercase mb-2">Connected</h4>
-                    <p className="text-gray-700">
-                      Inside the LBC, you'll transition from feeling isolated to
-                      becoming part of a supportive network, where collaboration
-                      and community drive your growth and success.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <div className="w-4 h-4 mt-2 bg-orange-400 shrink-0"></div>
-                  <div>
-                    <h4 className="font-bold uppercase mb-2">Empowered</h4>
-                    <p className="text-gray-700">
-                      Experience a shift from overwhelmed to empowered, as the
-                      LBC provides the tools and resources needed to navigate
-                      challenges and move forward with confidence.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="lg:w-1/2">
-              <div className="aspect-[4/5]">
-                <img
-                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                  alt="Happy diverse group working"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <ThreadStrip />
-
-      {/* Stories / Testimonial (Image 9) */}
-      <Section id="stories" className="bg-[#F4F1EA]">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col lg:flex-row gap-12">
-            <div className="lg:w-1/3">
-              <div className="aspect-[3/4] relative">
-                <img
-                  src="https://images.unsplash.com/photo-1556740758-90de374c12ad?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                  alt="Local business owners"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-            <div className="lg:w-2/3">
-              <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
-                <span style={{ color: colors.orange }}>
-                  Inspiring Stories from
-                  <br />
-                  Our Local Leaders
-                </span>
-              </h2>
-
-              <div className="space-y-6 text-gray-800 text-lg leading-relaxed">
-                <p>
-                  "Entering a new community as a small business leader with a
-                  new concept can be a challenge! You look at all the 'what
-                  if's' and 'who's who' in the demographic... and{" "}
-                  <span className="font-bold">
-                    that weight alone can be crippling to any entrepreneur.
-                  </span>
-                  "
-                </p>
-                <p>
-                  "Before entering our new business endeavor in Frederick, CO,
-                  we were welcomed and greeted at the local farmers market by
-                  some of the kindest and already established small town
-                  business owners... overnight became a family of force."
-                </p>
-                <p>
-                  "Opening a business is never as easy as one would think and
-                  through the connection, inclusion and transparency of those
-                  new friendships... we were able to build a network of trust.{" "}
-                  <span className="font-bold">
-                    Never doubt the strength of the community around you
-                  </span>
-                  ."
-                </p>
-              </div>
-
-              <div className="mt-8 font-bold text-sm uppercase tracking-wide">
-                - Isaac Olson & Shane Stinn
-                <br />
-                <span className="text-gray-600 font-normal normal-case">
-                  Owners of 2025 Frederick Small Business of the Year, MECO
-                  Coffee Collective
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Section>
 
       {/* Footer */}
       <footer id="contact" className="bg-white pt-16">
         <div className="container mx-auto px-6 pb-12">
           <div className="flex flex-col md:flex-row justify-between items-start gap-8">
             <div className="max-w-xs">
-              <div className="w-16 h-16 border-2 border-black flex flex-wrap p-1 mb-6">
-                <span className="w-1/2 h-1/2 border-r border-b border-black rounded-tl-lg block"></span>
-                <span className="w-1/2 h-1/2 border-b border-black block"></span>
-                <span className="w-1/2 h-1/2 border-r border-black block"></span>
-                <span className="w-1/2 h-1/2 bg-black rounded-br-lg block"></span>
-              </div>
+              <img
+                src="/Assets/LBC Primary.svg"
+                alt="LBC Logo"
+                className="w-16 h-16 object-contain mb-6"
+              />
               <p className="text-sm text-gray-600 mb-4">
                 We help entrepreneurs weave their unique threads into the fabric
                 of our community.
