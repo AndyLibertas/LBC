@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
-  BookOpen,
-  Users,
-  TrendingUp,
   Menu,
   X,
-  ArrowRight,
   Instagram,
   Linkedin,
   Facebook,
@@ -17,7 +13,6 @@ import {
 const LbcWebsite = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [heroLoaded, setHeroLoaded] = useState(false);
   const [currentStoryIndex, setCurrentStoryIndex] = useState(0);
 
@@ -28,10 +23,10 @@ const LbcWebsite = () => {
       quotes: [
         "Entering a new community as a small business leader with a new concept can be a challenge! You look at all the 'what if's' and 'who's who' in the demographic... and that weight alone can be crippling to any entrepreneur.",
         "Before entering our new business endeavor in Frederick, CO, we were welcomed and greeted at the local farmers market by some of the kindest and already established small town business owners... overnight became a family of force.",
-        "Opening a business is never as easy as one would think and through the connection, inclusion and transparency of those new friendships... we were able to build a network of trust. Never doubt the strength of the community around you."
+        "Opening a business is never as easy as one would think and through the connection, inclusion and transparency of those new friendships... we were able to build a network of trust. Never doubt the strength of the community around you.",
       ],
       author: "Isaac Olson & Shane Stinn",
-      role: "Owners of 2025 Frederick Small Business of the Year, MECO Coffee Collective"
+      role: "Owners of 2025 Frederick Small Business of the Year, MECO Coffee Collective",
     },
     {
       image: "/Assets/DMC-1-16.jpg",
@@ -40,11 +35,11 @@ const LbcWebsite = () => {
         "It’s been really helpful, too find the support of a community full of fellow business owners. There’s so much to be learned from other people’s experiences and getting to hear from people willing to share what they would do differently if they could to help other people not learn the hard way.",
         "That sharing also helps to shorten the learning curve quite a bit.",
         "There is also a vast amount of resources when it comes to working within a community like-minded people that are willing to share.",
-        "When you’re a business owner going at it alone or even just with your own very small team, it can quickly feel like you’re on your own or your struggles are insurmountable. And that’s one of the many benefits of being surrounded by a community of fellow business owners. They’ve been where you’ve been or they are where you are and so you feel less alone and more like you can take on what the future holds."
+        "When you’re a business owner going at it alone or even just with your own very small team, it can quickly feel like you’re on your own or your struggles are insurmountable. And that’s one of the many benefits of being surrounded by a community of fellow business owners. They’ve been where you’ve been or they are where you are and so you feel less alone and more like you can take on what the future holds.",
       ],
       author: "Angel Hepp",
-      role: "Founder, Josephine & Grace"
-    }
+      role: "Founder, Josephine & Grace",
+    },
   ];
 
   const nextStory = () => {
@@ -52,20 +47,13 @@ const LbcWebsite = () => {
   };
 
   const prevStory = () => {
-    setCurrentStoryIndex((prev) => (prev - 1 + stories.length) % stories.length);
+    setCurrentStoryIndex(
+      (prev) => (prev - 1 + stories.length) % stories.length
+    );
   };
 
   useEffect(() => {
     setHeroLoaded(true);
-  }, []);
-
-  // Handle scroll for navbar styling
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -83,7 +71,15 @@ const LbcWebsite = () => {
   };
 
   // Reusable Components
-  const Section = ({ className, children, id }) => (
+  const Section = ({
+    className,
+    children,
+    id,
+  }: {
+    className?: string;
+    children: React.ReactNode;
+    id?: string;
+  }) => (
     <section id={id} className={`py-16 md:py-24 ${className}`}>
       {children}
     </section>
@@ -99,10 +95,16 @@ const LbcWebsite = () => {
     </div>
   );
 
-  const ContactModal = ({ isOpen, onClose }) => {
+  const ContactModal = ({
+    isOpen,
+    onClose,
+  }: {
+    isOpen: boolean;
+    onClose: () => void;
+  }) => {
     if (!isOpen) return null;
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent) => {
       e.preventDefault();
       // Handle form submission logic here
       alert("Thank you for contacting us! We will get back to you shortly.");
@@ -118,14 +120,21 @@ const LbcWebsite = () => {
           >
             <X size={24} />
           </button>
-          
+
           <div className="p-8">
-            <h2 className="text-2xl font-bold mb-2 text-[#F5A623]">Let's collaborate! Contact us today.</h2>
-            <p className="text-gray-600 mb-6">We'd love to hear from you. Fill out the form below.</p>
-            
+            <h2 className="text-2xl font-bold mb-2 text-[#F5A623]">
+              Let's collaborate! Contact us today.
+            </h2>
+            <p className="text-gray-600 mb-6">
+              We'd love to hear from you. Fill out the form below.
+            </p>
+
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Name <span className="text-[#F5A623]">*</span>
                 </label>
                 <input
@@ -136,9 +145,12 @@ const LbcWebsite = () => {
                   placeholder="Your Name"
                 />
               </div>
-              
+
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Email <span className="text-[#F5A623]">*</span>
                 </label>
                 <input
@@ -149,9 +161,12 @@ const LbcWebsite = () => {
                   placeholder="your@email.com"
                 />
               </div>
-              
+
               <div>
-                <label htmlFor="reason" className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor="reason"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Reason for Contacting
                 </label>
                 <textarea
@@ -161,7 +176,7 @@ const LbcWebsite = () => {
                   placeholder="How can we help you?"
                 ></textarea>
               </div>
-              
+
               <button
                 type="submit"
                 className="w-full bg-[#121212] text-white font-bold py-3 rounded-md hover:bg-[#F5A623] transition-colors duration-300 mt-2"
@@ -175,15 +190,36 @@ const LbcWebsite = () => {
     );
   };
 
+  const methodologyItems: {
+    image?: string;
+    icon?: any;
+    title: string;
+    text: string;
+  }[] = [
+    {
+      image: "/Assets/Education_button.png",
+      title: "EDUCATION",
+      text: "Empower your business with access to workshops: from financial fluency to marketing mastery, access programs built around what you want to learn, designed and led by community experts.",
+    },
+    {
+      image: "/Assets/Community_button.png",
+      title: "CONNECTION",
+      text: "Collaboration is our greatest currency. Work side-by-side with other entrepreneurs for peer-to-peer learning and mentorship. Enggage in events that create real opportunities for growth and partnership",
+    },
+    {
+      image: "/Assets/Recong_button.png",
+      title: "RECOGNITION",
+      text: "Celebrate local success and elevate your brand. Through spotlights, showcases, and shared storytelling, ensure your wins don’t go unnoticed - because your success fuels our entire community.",
+    },
+  ];
+
   return (
     <div
       className="font-sans antialiased text-[#121212]"
       style={{ backgroundColor: colors.beige }}
     >
       {/* Navigation */}
-      <nav
-        className="fixed w-full z-50 transition-all duration-300 bg-white/95 shadow-md py-2"
-      >
+      <nav className="fixed w-full z-50 transition-all duration-300 bg-white/95 shadow-md py-2">
         <div className="container mx-auto px-6 flex justify-between items-center">
           {/* Logo Placeholder */}
           <div className="flex items-center justify-center h-full">
@@ -205,7 +241,11 @@ const LbcWebsite = () => {
               (item) => (
                 <a
                   key={item}
-                  href={item === "Contact" ? "#" : `#${item.toLowerCase().replace(" ", "-")}`}
+                  href={
+                    item === "Contact"
+                      ? "#"
+                      : `#${item.toLowerCase().replace(" ", "-")}`
+                  }
                   onClick={(e) => {
                     if (item === "Contact") {
                       e.preventDefault();
@@ -234,7 +274,11 @@ const LbcWebsite = () => {
                 (item) => (
                   <a
                     key={item}
-                    href={item === "Contact" ? "#" : `#${item.toLowerCase().replace(" ", "-")}`}
+                    href={
+                      item === "Contact"
+                        ? "#"
+                        : `#${item.toLowerCase().replace(" ", "-")}`
+                    }
                     onClick={(e) => {
                       if (item === "Contact") {
                         e.preventDefault();
@@ -262,7 +306,10 @@ const LbcWebsite = () => {
           playsInline
           className="absolute top-0 left-0 w-full h-full object-cover z-0"
         >
-          <source src="/Assets/7792548-hd_1920_1080_25fps.mp4" type="video/mp4" />
+          <source
+            src="/Assets/7792548-hd_1920_1080_25fps.mp4"
+            type="video/mp4"
+          />
           Your browser does not support the video tag.
         </video>
         <img
@@ -294,15 +341,14 @@ const LbcWebsite = () => {
                   that hold the fabric of a town together
                 </span>
               </h1>
-              <p className="text-xl text-gray-700 mb-8 max-w-lg">
-              </p>
+              <p className="text-xl text-gray-700 mb-8 max-w-lg"></p>
               <button className="px-8 py-3 bg-[#121212] text-white font-bold tracking-wide hover:bg-[#F5A623] transition-colors duration-300">
                 JOIN THE COLLABORATIVE
               </button>
             </div>
           </div>
         </div>
-        
+
         {/* Full height image on the right (1/3 width on desktop) */}
         <div className="hidden lg:block absolute top-0 right-0 w-1/3 h-full">
           <img
@@ -367,8 +413,13 @@ const LbcWebsite = () => {
                   title: "BURNOUT",
                   content: (
                     <>
-                      Another year spent in isolation leads to increased stress and burnout, leaving{" "}
-                      <span className="text-[#3C66F4]">entrepreneurs feeling drained and overwhelmed</span>. This cycle can stifle creativity and dminish passion for their work
+                      Another year spent in isolation leads to increased stress
+                      and burnout, leaving{" "}
+                      <span className="text-[#3C66F4]">
+                        entrepreneurs feeling drained and overwhelmed
+                      </span>
+                      . This cycle can stifle creativity and dminish passion for
+                      their work
                     </>
                   ),
                 },
@@ -376,8 +427,13 @@ const LbcWebsite = () => {
                   title: "PRESSURE",
                   content: (
                     <>
-                      Isolation amplifies the pressure of leadership. With no space to process ideas, validate direction, or share responsibility,{" "}
-                      <span className="text-[#3C66F4]">entrepreneurs carry everything themselves leading to heightened stress, second-guessing,</span>{" "}
+                      Isolation amplifies the pressure of leadership. With no
+                      space to process ideas, validate direction, or share
+                      responsibility,{" "}
+                      <span className="text-[#3C66F4]">
+                        entrepreneurs carry everything themselves leading to
+                        heightened stress, second-guessing,
+                      </span>{" "}
                       and a relentless sense of being on wth no relief.
                     </>
                   ),
@@ -386,8 +442,13 @@ const LbcWebsite = () => {
                   title: "STAGNATION",
                   content: (
                     <>
-                      Without proactive change, many entrepreneurs find themselves stuck struggling to naviate challenges alone, utlimately {" "}
-                      <span className="text-[#3C66F4]">missing opportinities for growth and innovation,</span> that collaboration provides.
+                      Without proactive change, many entrepreneurs find
+                      themselves stuck struggling to naviate challenges alone,
+                      utlimately{" "}
+                      <span className="text-[#3C66F4]">
+                        missing opportinities for growth and innovation,
+                      </span>{" "}
+                      that collaboration provides.
                     </>
                   ),
                 },
@@ -414,7 +475,10 @@ const LbcWebsite = () => {
       <ThreadStrip />
 
       {/* Intro & Quote (Images 5 & 6) */}
-      <section id="mission" className="relative bg-[#F4F1EA] min-h-[500px] flex items-center overflow-hidden">
+      <section
+        id="mission"
+        className="relative bg-[#F4F1EA] min-h-[500px] flex items-center overflow-hidden"
+      >
         <div className="container mx-auto px-6 relative z-10 py-16 md:py-24">
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <div className="lg:w-2/3">
@@ -453,7 +517,6 @@ const LbcWebsite = () => {
       </section>
       <ThreadStrip />
 
-
       {/* Methodology (Image 7) */}
       <div className="relative py-20">
         {/* Background Image */}
@@ -475,30 +538,18 @@ const LbcWebsite = () => {
           </h2>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                image: "/Assets/Education_button.png",
-                title: "EDUCATION",
-                text: "Empower your business with access to workshops: from financial fluency to marketing mastery, access programs built around what you want to learn, designed and led by community experts.",
-              },
-              {
-                image: "/Assets/Community_button.png",
-                title: "CONNECTION",
-                text: "Collaboration is our greatest currency. Work side-by-side with other entrepreneurs for peer-to-peer learning and mentorship. Enggage in events that create real opportunities for growth and partnership",
-              },
-              {
-                image: "/Assets/Recong_button.png",
-                title: "RECOGNITION",
-                text: "Celebrate local success and elevate your brand. Through spotlights, showcases, and shared storytelling, ensure your wins don’t go unnoticed - because your success fuels our entire community.",
-              },
-            ].map((item, idx) => (
+            {methodologyItems.map((item, idx) => (
               <div
                 key={idx}
                 className="border-2 border-[#F5A623] p-8 flex flex-col items-center text-center bg-white/50 backdrop-blur-sm hover:shadow-lg transition-shadow"
               >
                 <div className="w-16 h-16 bg-[#F5A623] rounded flex items-center justify-center text-white mb-6 overflow-hidden">
                   {item.image ? (
-                    <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover"
+                    />
                   ) : (
                     <item.icon size={32} />
                   )}
@@ -545,8 +596,8 @@ const LbcWebsite = () => {
                 <div>
                   <h4 className="font-bold uppercase mb-2">Empowered</h4>
                   <p className="text-gray-700">
-                    Experience a shift from overwhelmed to empowered, as the
-                    LBC provides the tools and resources needed to navigate
+                    Experience a shift from overwhelmed to empowered, as the LBC
+                    provides the tools and resources needed to navigate
                     challenges and move forward with confidence.
                   </p>
                 </div>
@@ -565,7 +616,10 @@ const LbcWebsite = () => {
       <ThreadStrip />
 
       {/* Stories / Testimonial (Image 9) */}
-      <section id="stories" className="flex flex-col lg:flex-row bg-[#F4F1EA] min-h-[350px]">
+      <section
+        id="stories"
+        className="flex flex-col lg:flex-row bg-[#F4F1EA] min-h-[350px]"
+      >
         {/* Image Section - 1/3 width on desktop, full on mobile */}
         <div className="lg:w-1/3 w-full relative min-h-[350px] lg:min-h-auto group">
           <img
@@ -731,7 +785,9 @@ const LbcWebsite = () => {
                 <li className="flex items-center gap-2">
                   <Mail size={16} /> fred@localbusinesscollaborative.com
                 </li>
-                <li className="flex items-center gap-2">501 Walnut St. Frederick, CO 80530</li>
+                <li className="flex items-center gap-2">
+                  501 Walnut St. Frederick, CO 80530
+                </li>
               </ul>
             </div>
 
@@ -768,7 +824,10 @@ const LbcWebsite = () => {
       </footer>
 
       {/* Contact Modal */}
-      <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
+      <ContactModal
+        isOpen={isContactOpen}
+        onClose={() => setIsContactOpen(false)}
+      />
     </div>
   );
 };
