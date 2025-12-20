@@ -326,12 +326,12 @@ const LbcWebsite = () => {
       {/* Hero Section (Image 2) */}
       <header
         id="about"
-        className="relative min-h-[600px] flex items-center overflow-hidden py-16 md:py-0"
+        className="relative flex items-center overflow-hidden py-8 md:py-0 md:min-h-[600px]"
       >
         <div className="container mx-auto px-6 relative z-10">
-          <div className="flex flex-col lg:flex-row items-center gap-12">
+          <div className="flex flex-col lg:flex-row items-center gap-8 md:gap-12">
             <div className="lg:w-2/3">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 md:mb-6">
                 <span style={{ color: colors.orange }}>
                   Entrepreneurs are the{" "}
                 </span>
@@ -341,8 +341,11 @@ const LbcWebsite = () => {
                   that hold the fabric of a town together
                 </span>
               </h1>
-              <p className="text-xl text-gray-700 mb-8 max-w-lg"></p>
-              <button className="px-8 py-3 bg-[#121212] text-white font-bold tracking-wide hover:bg-[#F5A623] transition-colors duration-300">
+              <p className="text-xl text-gray-700 mb-6 md:mb-8 max-w-lg"></p>
+              <button 
+                onClick={() => setIsContactOpen(true)}
+                className="px-8 py-3 bg-[#121212] text-white font-bold tracking-wide hover:bg-[#F5A623] transition-colors duration-300"
+              >
                 JOIN THE COLLABORATIVE
               </button>
             </div>
