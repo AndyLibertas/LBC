@@ -607,7 +607,7 @@ const LbcWebsite = () => {
               </div>
             </div>
           </div>
-          <div className="lg:w-1/2 w-full flex justify-center lg:self-end">
+          <div className="hidden lg:flex lg:w-1/2 w-full justify-center lg:self-end">
             <img
               src="/Assets/whoyoubecome.png"
               alt="Happy diverse group working"
