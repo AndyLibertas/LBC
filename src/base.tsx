@@ -219,7 +219,7 @@ const LbcWebsite = () => {
       style={{ backgroundColor: colors.beige }}
     >
       {/* Navigation */}
-      <nav className="fixed w-full z-50 transition-all duration-300 bg-white/95 shadow-md py-2">
+      <nav className="fixed w-full z-50 transition-all duration-300 bg-white/95 shadow-md py-0.5">
         <div className="container mx-auto px-6 flex justify-between items-center">
           {/* Logo Placeholder */}
           <div className="flex items-center justify-center h-full">
@@ -298,7 +298,7 @@ const LbcWebsite = () => {
       </nav>
 
       {/* New Top Hero Section */}
-      <div className="relative w-full h-[50vh] md:h-[80vh] overflow-hidden flex items-center justify-center bg-[#121212]">
+      <div className="relative w-full h-[60vh] md:h-screen overflow-hidden flex items-center justify-center bg-[#121212]">
         <video
           autoPlay
           loop
