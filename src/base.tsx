@@ -298,13 +298,13 @@ const LbcWebsite = () => {
       </nav>
 
       {/* New Top Hero Section */}
-      <div className="relative w-full h-screen overflow-hidden flex items-center justify-center bg-[#121212]">
+      <div className="relative w-full h-[35vh] md:h-[55vh] overflow-hidden flex items-center justify-center bg-[#121212]">
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="absolute top-0 left-0 w-full h-full object-cover z-0"
+          className="absolute top-0 left-0 w-full h-full object-cover object-center z-0"
         >
           <source
             src="/Assets/7792548-hd_1920_1080_25fps.mp4"
@@ -312,13 +312,15 @@ const LbcWebsite = () => {
           />
           Your browser does not support the video tag.
         </video>
+        {/* Dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/40 z-0" />
         <img
           src="/Assets/Website cover photo.png"
           alt="LBC Threads with Logo"
-          className={`relative z-10 max-w-full max-h-full object-contain transition-all duration-[2000ms] ease-out ${
+          className={`relative z-10 max-w-[95%] md:max-w-full max-h-[90%] md:max-h-full object-contain transition-all duration-[2000ms] ease-out ${
             heroLoaded
-              ? "opacity-90 scale-150 blur-0"
-              : "opacity-0 scale-110 blur-sm"
+              ? "opacity-100 scale-100 md:scale-110 blur-0"
+              : "opacity-0 scale-95 blur-sm"
           }`}
         />
       </div>
