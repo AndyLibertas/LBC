@@ -56,6 +56,54 @@ const LbcWebsite = () => {
     setHeroLoaded(true);
   }, []);
 
+  useEffect(() => {
+    // Generate a session ID if not present
+    let sessionId = sessionStorage.getItem("sessionId");
+    if (!sessionId) {
+      sessionId = Math.random().toString(36).substring(2);
+      sessionStorage.setItem("sessionId", sessionId);
+    }
+
+    // Calculate load time (approximate, using navigation timing)
+    const loadTime =
+      performance.timing.loadEventEnd - performance.timing.navigationStart;
+
+    // Determine device type
+    const isMobile = window.innerWidth <= 768;
+    const deviceType = isMobile ? "mobile" : "desktop";
+
+    // Extract search query from referrer if from a search engine
+    const searchQuery =
+      document.referrer.includes("google.com") ||
+      document.referrer.includes("bing.com")
+        ? new URL(document.referrer).searchParams.get("q") || ""
+        : "";
+
+    const baseUrl = import.meta.env.DEV
+      ? "http://localhost:4000"
+      : "https://website-servers.onrender.com";
+
+    fetch(`${baseUrl}/lbc/metrics`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        event: "page_view",
+        timestamp: new Date().toISOString(),
+        referrer: document.referrer,
+        userAgent: navigator.userAgent,
+        page: window.location.pathname,
+        sessionId,
+        loadTime,
+        deviceType,
+        connectionType:
+          (navigator as any).connection?.effectiveType || "unknown",
+        viewportWidth: window.innerWidth,
+        viewportHeight: window.innerHeight,
+        searchQuery,
+      }),
+    });
+  }, []);
+
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   // Color Palette extraction
@@ -342,7 +390,7 @@ const LbcWebsite = () => {
                 </span>
               </h1>
               <p className="text-xl text-gray-700 mb-6 md:mb-8 max-w-lg"></p>
-              <button 
+              <button
                 onClick={() => setIsContactOpen(true)}
                 className="px-8 py-3 bg-[#121212] text-white font-bold tracking-wide hover:bg-[#F5A623] transition-colors duration-300"
               >
