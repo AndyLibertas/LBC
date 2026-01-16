@@ -846,19 +846,19 @@ const LbcWebsite = () => {
               <h4 className="font-bold uppercase mb-4">Follow Us</h4>
               <div className="flex space-x-4">
                 <a
-                  href="#"
+                  href="https://www.instagram.com/localbusinesscollaborative/"
                   className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-[#F5A623] hover:text-white transition-colors"
                 >
                   <Instagram size={20} />
                 </a>
                 <a
-                  href="#"
+                  href="https://www.linkedin.com/company/the-local-business-collaborative"
                   className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-[#F5A623] hover:text-white transition-colors"
                 >
                   <Linkedin size={20} />
                 </a>
                 <a
-                  href="#"
+                  href="https://www.facebook.com/LocalBusinessCollaborative"
                   className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-[#F5A623] hover:text-white transition-colors"
                 >
                   <Facebook size={20} />
