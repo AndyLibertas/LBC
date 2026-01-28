@@ -6,6 +6,8 @@ import {
   Linkedin,
   Facebook,
   Mail,
+  Phone,
+  MapPin,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
@@ -837,7 +839,10 @@ const LbcWebsite = () => {
                   <Mail size={16} /> fred@localbusinesscollaborative.com
                 </li>
                 <li className="flex items-center gap-2">
-                  501 Walnut St. Frederick, CO 80530
+                  <Phone size={16} /> 303-746-0699
+                </li>
+                <li className="flex items-center gap-2">
+                  <MapPin size={16} /> 501 Walnut St. Frederick, CO 80530
                 </li>
               </ul>
             </div>
