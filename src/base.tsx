@@ -1,19 +1,10 @@
 import { useState, useEffect } from "react";
-import {
-  Menu,
-  X,
-  Instagram,
-  Linkedin,
-  Facebook,
-  Mail,
-  Phone,
-  MapPin,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import SiteNav from "./components/SiteNav";
+import ContactModal from "./components/ContactModal";
+import SiteFooter from "./components/SiteFooter";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const LbcWebsite = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [heroLoaded, setHeroLoaded] = useState(false);
   const [currentStoryIndex, setCurrentStoryIndex] = useState(0);
@@ -106,8 +97,6 @@ const LbcWebsite = () => {
     });
   }, []);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
   // Color Palette extraction
   const colors = {
     beige: "#F1EDE6", // Main light background
@@ -145,101 +134,6 @@ const LbcWebsite = () => {
     </div>
   );
 
-  const ContactModal = ({
-    isOpen,
-    onClose,
-  }: {
-    isOpen: boolean;
-    onClose: () => void;
-  }) => {
-    if (!isOpen) return null;
-
-    const handleSubmit = (e: React.FormEvent) => {
-      e.preventDefault();
-      // Handle form submission logic here
-      alert("Thank you for contacting us! We will get back to you shortly.");
-      onClose();
-    };
-
-    return (
-      <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-[#121212]/50 backdrop-blur-sm">
-        <div className="bg-white rounded-lg shadow-xl w-full max-w-md relative overflow-hidden animate-fade-in">
-          <button
-            onClick={onClose}
-            className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors"
-          >
-            <X size={24} />
-          </button>
-
-          <div className="p-8">
-            <h2 className="text-2xl font-bold mb-2 text-[#F5A623]">
-              Let's collaborate! Contact us today.
-            </h2>
-            <p className="text-gray-600 mb-6">
-              We'd love to hear from you. Fill out the form below.
-            </p>
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Name <span className="text-[#F5A623]">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#F5A623] focus:border-transparent outline-none transition-all"
-                  placeholder="Your Name"
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Email <span className="text-[#F5A623]">*</span>
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#F5A623] focus:border-transparent outline-none transition-all"
-                  placeholder="your@email.com"
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="reason"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Reason for Contacting
-                </label>
-                <textarea
-                  id="reason"
-                  rows={4}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#F5A623] focus:border-transparent outline-none transition-all resize-none"
-                  placeholder="How can we help you?"
-                ></textarea>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-[#121212] text-white font-bold py-3 rounded-md hover:bg-[#F5A623] transition-colors duration-300 mt-2"
-              >
-                SEND MESSAGE
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   const methodologyItems: {
     image?: string;
     icon?: any;
@@ -269,83 +163,7 @@ const LbcWebsite = () => {
       style={{ backgroundColor: colors.beige }}
     >
       {/* Navigation */}
-      <nav className="fixed w-full z-50 transition-all duration-300 bg-white/95 shadow-md py-0.5">
-        <div className="container mx-auto px-6 flex justify-between items-center">
-          {/* Logo Placeholder */}
-          <div className="flex items-center justify-center h-full">
-            <button
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="w-[200px] h-24 flex items-center justify-center hover:opacity-80 transition-opacity"
-            >
-              <img
-                src="/Assets/LBC Primary.svg"
-                className="object-contain h-full"
-                alt="LBC Logo"
-              />
-            </button>
-          </div>
-
-          {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-8 font-medium text-sm tracking-wide">
-            {["About", "The Problem", "Community", "Stories", "Contact"].map(
-              (item) => (
-                <a
-                  key={item}
-                  href={
-                    item === "Contact"
-                      ? "#"
-                      : `#${item.toLowerCase().replace(" ", "-")}`
-                  }
-                  onClick={(e) => {
-                    if (item === "Contact") {
-                      e.preventDefault();
-                      setIsContactOpen(true);
-                    }
-                  }}
-                  className="hover:text-[#F5A623] transition-colors"
-                >
-                  {item.toUpperCase()}
-                </a>
-              )
-            )}
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button className="md:hidden" onClick={toggleMenu}>
-            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
-        </div>
-
-        {/* Mobile Menu Overlay */}
-        {isMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 w-full bg-[#F4F1EA] border-b border-gray-200 py-4 shadow-lg">
-            <div className="flex flex-col items-center space-y-4">
-              {["About", "The Problem", "Community", "Stories", "Contact"].map(
-                (item) => (
-                  <a
-                    key={item}
-                    href={
-                      item === "Contact"
-                        ? "#"
-                        : `#${item.toLowerCase().replace(" ", "-")}`
-                    }
-                    onClick={(e) => {
-                      if (item === "Contact") {
-                        e.preventDefault();
-                        setIsContactOpen(true);
-                      }
-                      setIsMenuOpen(false);
-                    }}
-                    className="font-bold text-lg"
-                  >
-                    {item}
-                  </a>
-                )
-              )}
-            </div>
-          </div>
-        )}
-      </nav>
+      <SiteNav />
 
       {/* New Top Hero Section */}
       <div className="relative w-full h-[60vh] md:h-screen overflow-hidden flex items-center justify-center bg-[#121212]">
@@ -620,6 +438,63 @@ const LbcWebsite = () => {
       </div>
       <ThreadStrip />
 
+      {/* How to Be Involved — list of collaborator types (no boxes) */}
+      <div className="bg-[#F4F1EA]">
+        <div className="container mx-auto px-6 py-16 md:py-24">
+          <h2
+            className="text-4xl md:text-5xl font-bold mb-12 text-center"
+            style={{ color: "#D47558" }}
+          >
+            How to Be Involved at The LBC
+          </h2>
+
+          <div className="max-w-3xl mx-auto space-y-10">
+            <div className="border-l-4 border-[#F5A623] pl-6">
+              <h3 className="text-2xl font-bold mb-2 text-[#121212]">
+                Local Collaborator
+              </h3>
+              <p className="text-gray-700 leading-relaxed">
+                A Carbon Valley business leader who regularly takes part in the
+                LBC without renting office space. They register, they show up,
+                they build relationships, and they contribute.
+              </p>
+            </div>
+
+            <div className="border-l-4 border-[#F5A623] pl-6">
+              <h3 className="text-2xl font-bold mb-2 text-[#121212]">
+                Core Collaborator
+              </h3>
+              <p className="text-gray-700 leading-relaxed">
+                A business owner who has made the LBC the home for their business
+                through a private office, semi-private desk, or hot desk. They
+                anchor the community: the calendar, the culture, and the room.
+              </p>
+            </div>
+
+            <div className="border-l-4 border-[#F5A623] pl-6">
+              <h3 className="text-2xl font-bold mb-2 text-[#121212]">
+                Special Collaborator
+              </h3>
+              <p className="text-gray-700 leading-relaxed">
+                A business leader who owns or works in a business outside of the
+                Carbon Valley region but still wants to help provide education,
+                connection, and recognition to local businesses.
+              </p>
+            </div>
+          </div>
+
+          <div className="text-center mt-12">
+            <a
+              href="/join"
+              className="inline-block px-8 py-3 bg-[#121212] text-white font-bold tracking-wide hover:bg-[#F5A623] transition-colors duration-300"
+            >
+              JOIN HERE
+            </a>
+          </div>
+        </div>
+      </div>
+      <ThreadStrip />
+
       {/* Transformation (Image 8) */}
       <div className="bg-[#F4F1EA]">
         <div className="flex flex-col lg:flex-row items-center">
@@ -789,95 +664,7 @@ const LbcWebsite = () => {
       <ThreadStrip />
 
       {/* Footer */}
-      <footer id="contact" className="bg-white pt-16">
-        <div className="container mx-auto px-6 pb-12">
-          <div className="flex flex-col md:flex-row justify-between items-start gap-8">
-            <div className="max-w-xs">
-              <img
-                src="/Assets/LBC Primary.svg"
-                alt="LBC Logo"
-                className="w-24 h-24 object-contain mb-2"
-              />
-              <p
-                className="text-sm font-bold mb-4"
-                style={{ color: colors.orange }}
-              >
-                Together Is How We Grow
-              </p>
-            </div>
-
-            <div>
-              <h4 className="font-bold uppercase mb-4">Navigation</h4>
-              <ul className="space-y-2 text-sm text-gray-600">
-                <li>
-                  <a href="#about" className="hover:text-[#F5A623]">
-                    About
-                  </a>
-                </li>
-                <li>
-                  <a href="#community" className="hover:text-[#F5A623]">
-                    Community
-                  </a>
-                </li>
-                <li>
-                  <a href="#stories" className="hover:text-[#F5A623]">
-                    Stories
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-[#F5A623]">
-                    Events
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-bold uppercase mb-4">Contact</h4>
-              <ul className="space-y-2 text-sm text-gray-600">
-                <li className="flex items-center gap-2">
-                  <Mail size={16} /> fred@localbusinesscollaborative.com
-                </li>
-                <li className="flex items-center gap-2">
-                  <Phone size={16} /> 303-746-0699
-                </li>
-                <li className="flex items-center gap-2">
-                  <MapPin size={16} /> 501 Walnut St. Frederick, CO 80530
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-bold uppercase mb-4">Follow Us</h4>
-              <div className="flex space-x-4">
-                <a
-                  href="https://www.instagram.com/localbusinesscollaborative/"
-                  className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-[#F5A623] hover:text-white transition-colors"
-                >
-                  <Instagram size={20} />
-                </a>
-                <a
-                  href="https://www.linkedin.com/company/the-local-business-collaborative"
-                  className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-[#F5A623] hover:text-white transition-colors"
-                >
-                  <Linkedin size={20} />
-                </a>
-                <a
-                  href="https://www.facebook.com/LocalBusinessCollaborative"
-                  className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-[#F5A623] hover:text-white transition-colors"
-                >
-                  <Facebook size={20} />
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-16 pt-8 border-t border-gray-100 text-center text-xs text-gray-400 font-bold">
-            © 2025 Local Business Collaborative. All rights reserved.
-          </div>
-        </div>
-        <ThreadStrip />
-      </footer>
+      <SiteFooter />
 
       {/* Contact Modal */}
       <ContactModal
