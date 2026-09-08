@@ -8,6 +8,7 @@ import { NEXUDUS_MEMBER_LOGIN_URL } from "../config/nexudus";
 // page still has those sections, people just scroll to read them.
 const navItems = [
   { label: "Home", href: "/" },
+  { label: "Ethos", href: "/ethos" },
   { label: "Events", href: "/events" },
   { label: "Bookings", href: "/bookings" },
   // Hidden for now — restore these lines to bring them back.

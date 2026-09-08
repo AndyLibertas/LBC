@@ -28,6 +28,11 @@ const SiteFooter = () => (
               </a>
             </li>
             <li>
+              <a href="/ethos" className="hover:text-[#F5A623]">
+                Ethos
+              </a>
+            </li>
+            <li>
               <a href="/events" className="hover:text-[#F5A623]">
                 Events
               </a>

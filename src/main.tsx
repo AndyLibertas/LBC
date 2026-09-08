@@ -6,6 +6,7 @@ import Events from './pages/Events.tsx'
 import Join from './pages/Join.tsx'
 import Bookings from './pages/Bookings.tsx'
 import Articles from './pages/Articles.tsx'
+import Ethos from './pages/Ethos.tsx'
 import './index.css'
 
 const router = createBrowserRouter([
@@ -14,6 +15,7 @@ const router = createBrowserRouter([
   { path: '/join', element: <Join /> },
   { path: '/bookings', element: <Bookings /> },
   { path: '/articles', element: <Articles /> },
+  { path: '/ethos', element: <Ethos /> },
   // Unknown paths fall back to the home page rather than a dead end.
   { path: '*', element: <LbcWebsite /> },
 ])
